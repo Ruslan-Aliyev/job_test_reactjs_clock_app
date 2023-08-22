@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Time from './pages/Time';
+import Timer from './pages/Timer';
+import Countdown from './pages/Countdown';
+import Schedule from './pages/Schedule';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Time />} />
+        <Route path='timer' element={<Timer />} />
+        <Route path='countdown' element={<Countdown />} />
+        <Route path='schedule' element={<Schedule />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
