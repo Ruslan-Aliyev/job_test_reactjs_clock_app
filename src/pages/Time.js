@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import Menu from '../components/Menu.js';
 
-function Time() {
+function Time({displaySeconds, setDisplaySeconds}) {
   const [time, setTime] = useState('');
-  const [displaySeconds, setDisplaySeconds] = useState(0);
 
   useEffect(() => { 
     const interval = setInterval(() => {
@@ -29,7 +28,7 @@ function Time() {
     return () => clearInterval(interval);
   }, [displaySeconds]);
 
-  const [bar, setBar] = useState({ isHidden: false });
+  const [bar, setBar] = useState({ isHidden: true });
   
   function toggleMenu() 
   {

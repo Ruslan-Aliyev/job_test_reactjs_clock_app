@@ -1,27 +1,35 @@
 import { useState, useEffect } from "react";
 import Menu from '../components/Menu.js';
+import stopButton from '../images/stop.jpg';
+import playButton from '../images/play.jpg';
+import pauseButton from '../images/pause.jpg';
 
-function Timer() {
+function Timer({setDisplaySeconds}) {
   const [timer, setTimer] = useState('');
+  const [ongoing, setOngoing] = useState(0);
+  const [playIcon, setPlayIcon] = useState(playButton);
 
   useEffect(() => { 
     let start = 0;
     setTimer('00:00:00');
 
     const interval = setInterval(() => {
-      start++;
+      if (ongoing === 1)
+      {
+        start++;
 
-      let display = new Date(start * 1000)
-        .toISOString()
-        .slice(11, 19);
+        let display = new Date(start * 1000)
+          .toISOString()
+          .slice(11, 19);
 
-      setTimer(display);
+        setTimer(display);
+      }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [ongoing]);
 
-  const [bar, setBar] = useState({ isHidden: false });
+  const [bar, setBar] = useState({ isHidden: true });
   
   function toggleMenu() 
   {
@@ -32,12 +40,40 @@ function Timer() {
 
   function onChangeMode(haveSeconds) 
   {
-    //@Todo
+    setDisplaySeconds(haveSeconds);
+  }
+
+  function stop() 
+  {
+
+  }
+  function play(e) 
+  {
+    if (ongoing === 1)
+    {
+      setOngoing(0);
+      setPlayIcon(playButton);
+    }
+    else
+    {
+      setOngoing(1);
+      setPlayIcon(pauseButton);
+    }
+
+    e.stopPropagation();
   }
 
   return (
     <div id="background" onClick={toggleMenu}>
       <div id="time-display" className="center-text">{timer}</div>
+      <div id="timer-bar">
+        <div id="stop" onClick={() => stop()}>
+          <img src={stopButton} alt="" />
+        </div>
+        <div id="play" onClick={(e) => play(e)}>
+          <img src={playIcon} alt="" />
+        </div>
+      </div>
       <Menu visibility={visibility} onChangeMode={onChangeMode}></Menu>
     </div>
   );

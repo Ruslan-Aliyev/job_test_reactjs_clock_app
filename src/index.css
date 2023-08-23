@@ -38,6 +38,7 @@ body, #root
   font-weight: bold;
   flex-grow: 1;
   flex-basis: 0;
+  background-color: black;
 }
 .menu-item > img
 {
@@ -50,4 +51,15 @@ body, #root
   display: flex;
   align-items: center;
   justify-content: center;
+}
+#timer-bar, 
+#countdown-bar, 
+#schedule-bar
+{
+  position: absolute;
+  color: white;
+  bottom: 10vh;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
 }

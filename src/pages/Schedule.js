@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import Menu from '../components/Menu.js';
+import skipButton from '../images/skip.jpg';
+import playButton from '../images/play.jpg';
+import pauseButton from '../images/pause.jpg';
 
-function Schedule() {
+function Schedule({setDisplaySeconds}) {
   const [schedule, setSchedule] = useState('');
 
   useEffect(() => { 
@@ -21,7 +24,7 @@ function Schedule() {
     return () => clearInterval(interval);
   }, []);
 
-  const [bar, setBar] = useState({ isHidden: false });
+  const [bar, setBar] = useState({ isHidden: true });
   
   function toggleMenu() 
   {
@@ -32,12 +35,20 @@ function Schedule() {
 
   function onChangeMode(haveSeconds) 
   {
-    //@Todo
+    setDisplaySeconds(haveSeconds);
   }
 
   return (
     <div id="background" onClick={toggleMenu}>
       <div id="time-display" className="center-text">{schedule}</div>
+      <div id="schedule-bar">
+        <div id="skip">
+          <img src={skipButton} alt="" />
+        </div>
+        <div id="play">
+          <img src={playButton} alt="" />
+        </div>
+      </div>
       <Menu visibility={visibility} onChangeMode={onChangeMode}></Menu>
     </div>
   );
