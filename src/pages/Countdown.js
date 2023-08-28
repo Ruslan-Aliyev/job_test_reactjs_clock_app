@@ -3,13 +3,18 @@ import Menu from '../components/Menu.js';
 import stopButton from '../images/stop.jpg';
 import playButton from '../images/play.jpg';
 import pauseButton from '../images/pause.jpg';
+import { useNavigate } from 'react-router-dom';
 
-function Countdown({setDisplaySeconds}) {
+function Countdown({setDisplaySeconds, countdownDuration}) {
+  const navigate = useNavigate();
   const [countdown, setCountdown] = useState('');
 
   useEffect(() => { 
-    let start = 300; // Dummy 5min
-    setCountdown('00:05:00');
+    let start = countdownDuration;
+    let initDisplay = new Date(start * 1000)
+      .toISOString()
+      .slice(11, 19);
+    setCountdown(initDisplay);
 
     const interval = setInterval(() => {
       start--;
@@ -38,11 +43,16 @@ function Countdown({setDisplaySeconds}) {
     setDisplaySeconds(haveSeconds);
   }
 
+  function cease() 
+  {
+    navigate("/countdown-menu");
+  }
+
   return (
     <div id="background" onClick={toggleMenu}>
       <div id="time-display" className="center-text">{countdown}</div>
       <div id="countdown-bar">
-        <div id="stop">
+        <div id="stop" onClick={() => cease()}>
           <img src={stopButton} alt="" />
         </div>
         <div id="play">

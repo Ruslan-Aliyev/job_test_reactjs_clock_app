@@ -20,7 +20,7 @@ function Menu({visibility, onChangeMode}) {
       <div className="menu-item center-text" onClick={() => navigate("/timer")}>
         <img src={timer} alt="" />
       </div>
-      <div className="menu-item center-text" onClick={() => navigate("/countdown")}>
+      <div className="menu-item center-text" onClick={() => navigate("/countdown-menu")}>
         <img src={countdown} alt="" />
       </div>
       <div className="menu-item center-text" onClick={() => navigate("/schedule")}>

@@ -63,3 +63,68 @@ body, #root
   width: 100%;
   justify-content: space-evenly;
 }
+
+#duration-pickers 
+{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 20vw;
+}
+.dial 
+{
+  width: 20vw;
+}
+.mask 
+{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.25) !important;
+}
+.mask:before 
+{ 
+  content: "\00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 "; 
+}
+[class^=index_number_]
+{
+  text-align: left !important;
+}
+[class^=index_number_]:before 
+{ 
+  content: "\00a0 \00a0 ";
+}
+[class^=index_layout_] 
+{
+  background-color: black !important;
+  color: white !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+#duration-pickers #play
+{
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+#duration-pickers #play img
+{
+  width: 50px;
+}
+#common-durations
+{
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  color: white;
+}
+.quick-duration 
+{
+  margin: 0;
+  width: 10vw;
+  height: 10vh;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5vw;
+}

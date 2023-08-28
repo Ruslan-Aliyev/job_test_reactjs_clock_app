@@ -3,17 +3,20 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Time from './pages/Time';
 import Timer from './pages/Timer';
 import Countdown from './pages/Countdown';
+import CountdownMenu from './pages/CountdownMenu';
 import Schedule from './pages/Schedule';
 
 function App() {
   const [displaySeconds, setDisplaySeconds] = useState(0);
+  const [countdownDuration, setCountdownDuration] = useState(0);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Time displaySeconds={displaySeconds} setDisplaySeconds={setDisplaySeconds} />} />
         <Route path='timer' element={<Timer setDisplaySeconds={setDisplaySeconds} />} />
-        <Route path='countdown' element={<Countdown setDisplaySeconds={setDisplaySeconds} />} />
+        <Route path='countdown' element={<Countdown setDisplaySeconds={setDisplaySeconds} countdownDuration={countdownDuration} />} />
+        <Route path='countdown-menu' element={<CountdownMenu setDisplaySeconds={setDisplaySeconds} setCountdownDuration={setCountdownDuration} />} />
         <Route path='schedule' element={<Schedule setDisplaySeconds={setDisplaySeconds} />} />
       </Routes>
     </BrowserRouter>
