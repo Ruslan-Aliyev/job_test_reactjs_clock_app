@@ -6,28 +6,28 @@ import pauseButton from '../images/pause.jpg';
 
 function Timer({setDisplaySeconds}) {
   const [timer, setTimer] = useState('');
-  const [ongoing, setOngoing] = useState(0);
+  const [ongoing, setOngoing] = useState(false);
+  const [counter, setCounter] = useState(1);
   const [playIcon, setPlayIcon] = useState(playButton);
 
   useEffect(() => { 
-    let start = 0;
     setTimer('00:00:00');
+  }, []);
 
-    const interval = setInterval(() => {
-      if (ongoing === 1)
+  useEffect(() => { 
+    let interval = setInterval(() => {
+      if (ongoing)
       {
-        start++;
-
-        let display = new Date(start * 1000)
+        setCounter((oldCounter) => oldCounter + 1);
+        let display = new Date(counter * 1000)
           .toISOString()
           .slice(11, 19);
-
         setTimer(display);
       }
     }, 1000);
 
-    return () => clearInterval(interval);
-  }, [ongoing]);
+    return () => { clearInterval(interval); };
+  }, [counter, ongoing]);
 
   const [bar, setBar] = useState({ isHidden: true });
   
@@ -43,20 +43,24 @@ function Timer({setDisplaySeconds}) {
     setDisplaySeconds(haveSeconds);
   }
 
-  function stop() 
+  function stop(e) 
   {
-
+    setTimer('00:00:00');
+    setCounter(1);
+    setOngoing(false);
+    setPlayIcon(playButton);
+    e.stopPropagation();
   }
   function play(e) 
   {
-    if (ongoing === 1)
+    if (ongoing === true)
     {
-      setOngoing(0);
+      setOngoing(false);
       setPlayIcon(playButton);
     }
     else
     {
-      setOngoing(1);
+      setOngoing(true);
       setPlayIcon(pauseButton);
     }
 
@@ -67,7 +71,7 @@ function Timer({setDisplaySeconds}) {
     <div id="background" onClick={toggleMenu}>
       <div id="time-display" className="center-text">{timer}</div>
       <div id="timer-bar">
-        <div id="stop" onClick={() => stop()}>
+        <div id="stop" onClick={(e) => stop(e)}>
           <img src={stopButton} alt="" />
         </div>
         <div id="play" onClick={(e) => play(e)}>

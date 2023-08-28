@@ -6,23 +6,27 @@ import pauseButton from '../images/pause.jpg';
 
 function Schedule({setDisplaySeconds}) {
   const [schedule, setSchedule] = useState('');
+  const [ongoing, setOngoing] = useState(true);
+  const [counter, setCounter] = useState(1500);
+  const [playIcon, setPlayIcon] = useState(pauseButton);
 
   useEffect(() => { 
-    let focus = 1500; // 25min
-    setSchedule('00:25:00');
+    let initDisplay = new Date(counter * 1000)
+      .toISOString()
+      .slice(11, 19);
+    setSchedule(initDisplay);
+  }, [counter]);
 
-    const interval = setInterval(() => {
-      focus--;
-
-      let display = new Date(focus * 1000)
-        .toISOString()
-        .slice(11, 19);
-
-      setSchedule(display);
+  useEffect(() => { 
+    let interval = setInterval(() => {
+      if (ongoing)
+      {
+        setCounter((oldCounter) => oldCounter - 1);
+      }
     }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => { clearInterval(interval); };
+  }, [counter, ongoing]);
 
   const [bar, setBar] = useState({ isHidden: true });
   
@@ -38,6 +42,22 @@ function Schedule({setDisplaySeconds}) {
     setDisplaySeconds(haveSeconds);
   }
 
+  function play(e) 
+  {
+    if (ongoing === true)
+    {
+      setOngoing(false);
+      setPlayIcon(playButton);
+    }
+    else
+    {
+      setOngoing(true);
+      setPlayIcon(pauseButton);
+    }
+
+    e.stopPropagation();
+  }
+
   return (
     <div id="background" onClick={toggleMenu}>
       <div id="time-display" className="center-text">{schedule}</div>
@@ -45,8 +65,8 @@ function Schedule({setDisplaySeconds}) {
         <div id="skip">
           <img src={skipButton} alt="" />
         </div>
-        <div id="play">
-          <img src={playButton} alt="" />
+        <div id="play" onClick={(e) => play(e)}>
+          <img src={playIcon} alt="" />
         </div>
       </div>
       <Menu visibility={visibility} onChangeMode={onChangeMode}></Menu>
