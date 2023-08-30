@@ -63,6 +63,13 @@ body, #root
   width: 100%;
   justify-content: space-evenly;
 }
+#schedule-bar > div
+{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 #duration-pickers 
 {
@@ -127,4 +134,71 @@ body, #root
   justify-content: center;
   align-items: center;
   border-radius: 5vw;
+}
+#mode > p
+{
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 0;
+  padding: 15px;
+  border-radius: 15px;
+}
+#customize-menu 
+{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: right;
+  flex-wrap: nowrap;
+  color: white;
+  padding-top: 10px;
+}
+#custom-button
+{
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+}
+
+table
+{
+  color: white;
+  padding-top: 30vh;
+}
+table.center
+{
+  margin: auto;
+}
+td
+{
+  padding: 20px;
+  text-align: center; 
+}
+.button
+{
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+}
+.nav-bar
+{
+  position: absolute;
+  color: white;
+  bottom: 10vh;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+.nav-bar > div
+{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav-bar > div > p
+{
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 15px;
 }

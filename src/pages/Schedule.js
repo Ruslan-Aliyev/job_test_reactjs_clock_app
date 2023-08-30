@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import Menu from '../components/Menu.js';
+import Customize from '../components/Customize.js';
 import skipButton from '../images/skip.jpg';
 import playButton from '../images/play.jpg';
 import pauseButton from '../images/pause.jpg';
 
-function Schedule({setDisplaySeconds}) {
+function Schedule({setDisplaySeconds, focusDuration, breakDuration}) {
   const [schedule, setSchedule] = useState('');
   const [ongoing, setOngoing] = useState(true);
-  const [counter, setCounter] = useState(1500);
+  const [counter, setCounter] = useState(focusDuration);
   const [playIcon, setPlayIcon] = useState(pauseButton);
+  const [mode, setMode] = useState('Focus 1');
 
   useEffect(() => { 
     let initDisplay = new Date(counter * 1000)
@@ -20,8 +22,15 @@ function Schedule({setDisplaySeconds}) {
   useEffect(() => { 
     let interval = setInterval(() => {
       if (ongoing)
-      {
-        setCounter((oldCounter) => oldCounter - 1);
+      {        
+        if (counter > 0)
+        {
+          setCounter((oldCounter) => oldCounter - 1);
+        }
+        else
+        {
+          setPlayIcon(playButton);
+        }
       }
     }, 1000);
 
@@ -42,6 +51,22 @@ function Schedule({setDisplaySeconds}) {
     setDisplaySeconds(haveSeconds);
   }
 
+  function skip(e) 
+  {
+    if (mode === 'Focus 1')
+    {
+      setMode('Break 1');
+      setCounter(breakDuration);
+    }
+    else
+    {
+      setMode('Focus 1');
+      setCounter(focusDuration);
+    }
+
+    e.stopPropagation();
+  }
+
   function play(e) 
   {
     if (ongoing === true)
@@ -60,10 +85,14 @@ function Schedule({setDisplaySeconds}) {
 
   return (
     <div id="background" onClick={toggleMenu}>
+      <Customize visibility={visibility} ></Customize>
       <div id="time-display" className="center-text">{schedule}</div>
       <div id="schedule-bar">
-        <div id="skip">
+        <div id="skip" onClick={(e) => skip(e)}>
           <img src={skipButton} alt="" />
+        </div>
+        <div id="mode">
+          <p>{mode}</p>
         </div>
         <div id="play" onClick={(e) => play(e)}>
           <img src={playIcon} alt="" />
